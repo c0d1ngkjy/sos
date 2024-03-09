@@ -25,7 +25,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 // CORS 관련 처리
-                .authorizeHttpRequests(a -> a.requestMatchers("/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/v2/api-docs", "/css/** ", "/images/**", "/js/**").permitAll()
+                .authorizeHttpRequests(a -> a.requestMatchers("/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/v3/**" , "/css/** ", "/images/**", "/js/**").permitAll()
                         .anyRequest().authenticated())
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
