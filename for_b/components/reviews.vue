@@ -3,12 +3,9 @@
         <UBadge color="primary" variant="solid">미용실에 신뢰받는</UBadge>
         <div class="text-3xl font-bold pt-3 pb-16 text-center">고객 리뷰</div>
 
-        <div class="flex flex-col md:flex-row gap-5">
+        <div class="flex flex-col md:flex-row gap-10">
             <div class="flex-1 flex flex-col items-center gap-4" v-for="review in reviews">
-                <!-- <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar" size="3xl" /> -->
-                <!-- <USkeleton class="h-32 w-32 animate-pulse" :ui="{ rounded: 'rounded-full' }" /> -->
-                <UIcon class="text-8xl" name="i-heroicons-user-circle" />
-
+                <UIcon class="text-7xl" name="i-heroicons-user" />
                 <div class="font-semibold">
                     {{ review.label }}
                 </div>
