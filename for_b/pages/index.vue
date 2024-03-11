@@ -13,6 +13,7 @@
     <hero />
     <service-info />
     <reviews />
+    <mockups/>
 
     <UDivider></UDivider>
     <div class="relative flex items-center justify-center py-36" style="overflow: hidden;">
@@ -29,6 +30,7 @@
             style="z-index: -1; width: 33vw; height: 33vw; border-radius: 15rem; background: linear-gradient(180deg, #EF516D 0%, rgba(239, 81, 109, 0) 100%), radial-gradient(94.51% 124.88% at 94.32% 94.43%, rgba(65, 244, 255, 0.78) 0%, rgba(131, 218, 255, 0.6552) 32.29%, rgba(99, 175, 240, 0.3978) 64.06%, rgba(43, 90, 211, 0) 100%), linear-gradient(313.04deg, #341D65 0.93%, #604AEA 125.68%); background-blend-mode: normal,normal,normal,normal,normal,normal; filter: blur(50px);">
         </div>
     </div>
+
     <Footer />
 </template>
 

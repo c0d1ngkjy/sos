@@ -1,5 +1,5 @@
 <template>
-    <div class="px-10 py-32">
+    <div class="px-10 pt-32">
         <div class="text-3xl font-bold py-10 text-center">미용실 관리를 위한 단 하나의 <span class="text-primary">솔루션</span></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div class="hover:border border-slate-700 rounded-lg px-5 py-3 flex flex-row items-center gap-5" v-for="item in infoContent">
