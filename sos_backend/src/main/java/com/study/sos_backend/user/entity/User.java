@@ -1,10 +1,14 @@
 package com.study.sos_backend.user.entity;
 
+import com.study.sos_backend.auth.utils.PasswordUtil;
 import com.study.sos_backend.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Getter
@@ -16,13 +20,44 @@ public class User extends BaseTimeEntity {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    // ID 값은 그냥 의미없고 userId가 주로 사용해서 유저 분리할거임.
-    @Column(name ="USER_ID", nullable = false, unique = true)
-    private String userId;
+    // ID 값은 그냥 의미없고 email 로 유저 식별.
+    @Column(name = "EMAIL", nullable = false, unique = true)
+    private String email;
+
+    private String password;
+
+    @Column(name = "SOCIAL_ID")
+    private String socialId;
+
+    @Enumerated(EnumType.STRING)
+    private ProviderType providerType;
 
     @Column
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
+    private String refreshToken;
 
+
+    @Builder
+    public User(String email, String password, String socialId, ProviderType providerType, RoleType roleType) {
+        this.email = email;
+
+        this.password = passwordEncode(password);
+        this.socialId = socialId;
+        this.providerType = providerType;
+        this.roleType = roleType;
+    }
+
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.refreshToken = updateRefreshToken;
+    }
+
+    private String passwordEncode(String rawPassword) {
+        if (rawPassword == null){
+            return PasswordUtil.generateRandomPassword();
+        }
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(rawPassword);
+    }
 }
