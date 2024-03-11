@@ -1,6 +1,9 @@
 <template class="pretendard">
     <div class="flex justify-between items-center px-8 py-2">
-        <div class="font-bold text-xl">Salon Search</div>
+        <div class="flex flex-row items-center gap-2">
+            <UIcon class="rotate-45" size="20" name="i-heroicons-scissors"></UIcon>
+            <div class="font-bold text-xl">Salon Search</div>
+        </div>
         <ClientOnly>
             <UButton size="xl" :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'" color="gray"
                 variant="ghost" aria-label="Theme" @click="isDark = !isDark" />
