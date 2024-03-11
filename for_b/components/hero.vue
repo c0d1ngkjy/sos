@@ -1,5 +1,5 @@
 <template>
-    <div class="px-10 flex flex-col justify-center items-center text-center h-screen space-y-5">
+    <div class="px-10 flex flex-col justify-center items-center h-[100vh] text-center space-y-5">
         <div class="md:text-6xl text-3xl font-bold">당신의 미용실을 <span class="text-primary">혁신</span>하세요.</div>
         <div class="md:text-2xl text-md">예약 관리, 고객 만족, 그리고 비즈니스 성장을 위한 올인원 플랫폼.</div>
         <UButton icon="i-heroicons-rocket-launch" size="xl" color="black" variant="solid" label="지금 신청하기"></UButton>
