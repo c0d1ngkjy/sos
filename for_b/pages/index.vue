@@ -17,11 +17,12 @@
     <service-info />
     <reviews />
     <mockups/>
+    <price />
 
     <UDivider></UDivider>
-    <div class="relative flex items-center justify-center py-36" style="overflow: hidden;">
-        <div class="flex flex-col items-center gap-5">
-            <div class="md:text-5xl text-3xl font-bold">지금 바로 등록하세요</div>
+    <div class="relative flex items-center justify-center py-56" style="overflow: hidden;">
+        <div class="flex flex-col items-center gap-10">
+            <div class="md:text-5xl text-3xl font-bold">지금 바로 등록하기</div>
             <UButton icon="i-heroicons-rocket-launch" size="xl" color="primary" variant="solid" label="지금 신청하기">
             </UButton>
         </div>
