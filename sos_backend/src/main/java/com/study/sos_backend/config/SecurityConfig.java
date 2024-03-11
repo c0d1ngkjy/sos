@@ -50,7 +50,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 // CORS 관련 처리
-                .authorizeHttpRequests(a -> a.requestMatchers("/swagger-resources/**", "/swagger-ui/**", "/webjars/**", "/swagger/**", "/v3/**" , "/css/** ", "/images/**", "/js/**").permitAll()
+                .authorizeHttpRequests(a -> a.requestMatchers("/swagger-resources/**", "/swagger-ui/index.html", "/swagger-ui/**", "/webjars/**", "/swagger/**", "/v3/**" , "/css/** ", "/images/**", "/js/**").permitAll()
                         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                         .requestMatchers("/api/v1/admin/**").hasAuthority(RoleType.ADMIN.getCode())
                         .requestMatchers("/api/v1/business/sign-up").permitAll()
