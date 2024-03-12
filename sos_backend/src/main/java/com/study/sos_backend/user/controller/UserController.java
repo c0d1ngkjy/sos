@@ -32,7 +32,6 @@ public class UserController {
         try {
             return ResponseEntity.ok(name);
         } catch (EntityNotFoundException e) {
-            log.info("에러났네");
             return ResponseEntity.badRequest().build();
         }
     }
