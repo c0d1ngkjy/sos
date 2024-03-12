@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI openAPI(){
+    public OpenAPI openAPI() {
         return new OpenAPI()
                 .components(new Components())
                 .info(apiInfo());
@@ -18,8 +18,10 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("SOS API SPECIFICATION")
-                .description("SOS API 명세서")
+                .title("Salon Search API SPECIFICATION")
+                .description("Salon Search API 명세서")
                 .version("1.0.0");
     }
+
+
 }
