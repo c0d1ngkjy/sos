@@ -16,11 +16,12 @@
             <UButton @click="loginDialog = true" variant="outline">로그인</UButton>
         </div>
 
-        <UButton class="sm:hidden" icon="i-heroicons-ellipsis-vertical" :padded="false" color="gray" variant="link" />
+        <UButton @click="loginDialog = true" class="sm:hidden" icon="i-heroicons-ellipsis-vertical" :padded="false" color="gray" variant="link" />
 
-        <UModal v-model="loginDialog">
-            <div class="py-10 flex flex-col gap-2 items-center ">
-                <UInput size="lg" v-model="emailInput" placeholder="이메일" />
+        <UModal fullscreen v-model="loginDialog">
+            <div class="py-10 h-full flex flex-col gap-2 justify-center items-center ">
+                <UButton @click="loginDialog = false" icon="i-heroicons-x-mark" variant="ghost"></UButton>
+                <UInput required size="lg" v-model="emailInput" placeholder="이메일" />
                 <UInput size="lg" v-model="passwordInput" placeholder="비밀번호" />
                 <UButton>로그인</UButton>
                 <nuxt-link to="/rgstr" class="text-sm underline text-primary-200">회원가입</nuxt-link>
@@ -35,8 +36,8 @@ const emailInput = ref('');
 const passwordInput = ref('');
 const tabs = [
     { name: '홈', path: '/' },
-    { name: '미용실 찾기', path: '/about' },
-    { name: '문의하기', path: '/contact' },
+    { name: '미용실 찾기', path: '/' },
+    { name: '문의하기', path: '/' },
 ];
 
 </script>
