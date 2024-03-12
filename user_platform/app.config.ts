@@ -1,8 +1,12 @@
 export default defineAppConfig({
     title: 'salon_search',
     ui: {
-        primary: 'green',
-        gray: 'stone'
-      }
-  })
-  
+        primary: 'sandal',
+        gray: 'stone',
+        icons: {
+            dynamic: true
+        }
+    }
+})
+
+
