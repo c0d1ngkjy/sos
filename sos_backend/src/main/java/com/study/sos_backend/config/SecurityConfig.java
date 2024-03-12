@@ -50,10 +50,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 // CORS 관련 처리
-                .authorizeHttpRequests(a -> a.requestMatchers("/swagger-resources/**", "/swagger-ui/index.html", "/swagger-ui/**", "/webjars/**", "/swagger/**", "/v3/**" , "/css/** ", "/images/**", "/js/**").permitAll()
+                .authorizeHttpRequests(a -> a.requestMatchers("/swagger-resources/**", "/swagger-ui/index.html", "/swagger-ui/**", "/webjars/**", "/swagger/**", "/v3/**", "/css/** ", "/images/**", "/js/**").permitAll()
                         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                         .requestMatchers("/api/v1/admin/**").hasAuthority(RoleType.ADMIN.getCode())
-                        .requestMatchers("/api/v1/business/sign-up").permitAll()
+                        .requestMatchers("/api/v1/business/login","/api/v1/business/sign-up").permitAll()
                         .requestMatchers("/api/v1/business/**").hasAnyAuthority(RoleType.ADMIN.getCode(), RoleType.BUSINESS.getCode())
                         .anyRequest().authenticated())
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
@@ -83,7 +83,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("*"));
