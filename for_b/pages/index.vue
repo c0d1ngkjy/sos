@@ -16,7 +16,7 @@
     <hero />
     <service-info />
     <reviews />
-    <mockups/>
+    <mockups />
     <price />
 
     <UDivider></UDivider>
