@@ -7,6 +7,11 @@ export default defineNuxtConfig({
   },
   plugins: [
   ],
+  runtimeConfig: {
+    public: {
+      kakaoJsApiKey: '972c8d91b867f0c29eba9f84b5492831'
+    }
+  },
   tailwindcss: {
     cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'last' }],
     configPath: 'tailwind.config',
@@ -41,6 +46,7 @@ export default defineNuxtConfig({
         { children: 'JavaScript is required' }
       ]
     }
-  }
+  },
+  
 
 })
