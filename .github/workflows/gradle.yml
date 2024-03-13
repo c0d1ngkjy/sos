@@ -31,12 +31,11 @@ jobs:
         distribution: 'temurin'
 
     - name : Setup nodejs
-      uses: actions/setup-node@v4.0.2
+      uses: actions/setup-node@v4
       with:
         node-version: 18
 
-    - run: npm init
-    - run : npm install
+    - run : npm ci
       
     - name: Build Vue application
       run: npm run build
@@ -63,7 +62,7 @@ jobs:
 
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./sos.zip s3://$S3_BUCKET_NAME/sos.zip
-      # 압축된 파일 지정정
+      # 압축된 파일 지정
 
     - name: Code Deploy
       run: >
@@ -72,22 +71,3 @@ jobs:
         --deployment-group-name dawheen-group
         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=sos.zip
 
-
-  # dependency-submission:
-
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: write
-
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Set up JDK 17
-  #     uses: actions/setup-java@v4
-  #     with:
-  #       java-version: '17'
-  #       distribution: 'temurin'
-
-  #   # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
-  #   # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
-  #   - name: Generate and submit dependency graph
-  #     uses: gradle/actions/dependency-submission@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
