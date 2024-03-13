@@ -35,7 +35,7 @@ jobs:
       with:
         node-version: 18
 
-    - run: npm ci
+    - run: npm ic
       
     - name: Build Vue application
       run: npm run build
