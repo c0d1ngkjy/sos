@@ -32,9 +32,10 @@ jobs:
 
     - name : Setup nodejs
       uses: actions/setup-node@v4.0.2
-        
-    - name: Install packages
-      run: npm install
+      with:
+        node-version: 18
+
+    - run: npm ci
       
     - name: Build Vue application
       run: npm run build
