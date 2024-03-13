@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss'
-import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default <Partial<Config>>{
   theme: {
@@ -18,7 +17,32 @@ export default <Partial<Config>>{
           900: '#4f3a34',
           950: '#2c1f1c',
         },
-
+        woodsmoke: {
+          50: '#f6f6f6',
+          100: '#e7e7e7',
+          200: '#d1d1d1',
+          300: '#b0b0b0',
+          400: '#888888',
+          500: '#6d6d6d',
+          600: '#5d5d5d',
+          700: '#4f4f4f',
+          800: '#454545',
+          900: '#3d3d3d',
+          950: '#1d1d1d',
+        },
+        yellow: {
+          50: '#feffe7',
+          100: '#faffc1',
+          200: '#f9ff86',
+          300: '#feff41',
+          400: '#fff40d',
+          500: '#fee500',
+          600: '#d1aa00',
+          700: '#a67b02',
+          800: '#895f0a',
+          900: '#744e0f',
+          950: '#442904',
+        }
       }
     }
   }

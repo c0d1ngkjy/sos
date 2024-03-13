@@ -5,6 +5,6 @@
 </template>
 
 <script setup>
-const $route = useRoute();
-console.log($route.query.code)
+//const $route = useRoute();
+//console.log($route.query.code)
 </script>
