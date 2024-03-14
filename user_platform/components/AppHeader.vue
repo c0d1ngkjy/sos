@@ -1,27 +1,32 @@
 <template>
     <div :style="scrolled ? 'background-color:#1d1d1d; color:white' : 'background-color:white'"
-        class="sticky top-0 bg-white flex flex-row justify-between items-center md:px-6 md:py-3 px-2 py-3">
-        <nuxt-link to="/" class="flex flex-row gap-1 items-center">
-            <UIcon class="text-xl rotate-45" name="i-heroicons-scissors" />
-            <div class="text-xl font-semibold">Salon Search</div>
-        </nuxt-link>
+        class="sticky top-0 z-10 bg-white flex flex-row justify-between items-center md:px-6 md:py-3 px-2 py-3">
+        <div class="flex flex-row gap-8 items-center">
+            <nuxt-link to="/" class="flex flex-row gap-1 items-center">
+                <UIcon class="text-xl rotate-45" name="i-heroicons-scissors" />
+                <div class="text-xl font-semibold">Salon Search</div>
+            </nuxt-link>
 
-        <div class="flex flex-row gap-3 max-sm:hidden">
-            <div v-for="nav in tabs">
-                <nuxt-link :class="scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'" :to="nav.path">{{ nav.name }}</nuxt-link>
+            <div class="flex flex-row gap-3 max-sm:hidden">
+                <div v-for="nav in tabs">
+                    <nuxt-link
+                        :class="scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'"
+                        :to="nav.path">{{ nav.name }}</nuxt-link>
+                </div>
             </div>
         </div>
 
-        <div class="max-sm:hidden">
-            <UButton @click="loginDialog = true" :color="scrolled? 'white' : 'black'" variant="solid" class="px-4">로그인</UButton>
+        <div class="max-sm:hidden float-end">
+            <UButton @click="loginDialog = true" :color="scrolled ? 'white' : 'black'" variant="solid" class="px-4">로그인
+            </UButton>
         </div>
 
-        <UButton @click="loginDialog = true" class="sm:hidden" icon="i-heroicons-ellipsis-vertical" :padded="false"
-            color="black" variant="link" />
+        <UButton @click="loginDialog = true" :color="scrolled ? 'white' : 'black'" class="sm:hidden"
+            icon="i-heroicons-ellipsis-vertical" :padded="false" variant="link" />
     </div>
 
     <UModal v-model="loginDialog">
-        <UForm :state="state" class="space-y-4 px-5 py-2" @submit="onSubmit">
+        <UForm :state="state" class="space-y-4 px-5 py-2 max-sm:pb-52" @submit="onSubmit">
             <div class="text-lg font-semibold py-4">Login</div>
             <UFormGroup label="이메일" name="email">
                 <UInput size="lg" v-model="state.email" />
@@ -36,7 +41,8 @@
                     로그인
                 </UButton>
 
-                <UButton block @click="handleKakaoLogin" color="yellow" size="xl">카카오 로그인</UButton>
+                <UButton icon="i-heroicons-chat-bubble-oval-left" block @click="handleKakaoLogin" color="yellow"
+                    size="xl">카카오로 시작하기</UButton>
             </div>
 
             <div class="flex flex-row justify-evenly pt-1 pb-3 text-sm text-primary-300">
@@ -54,8 +60,10 @@ const runtimeConfig = useRuntimeConfig();
 const loginDialog = ref(false);
 const tabs = [
     { name: '홈', path: '/' },
-    { name: '미용실 찾기', path: '/' },
-    { name: '문의하기', path: '/' },
+    { name: '내 주변', path: '/' },
+    { name: '예약', path: '/' },
+    { name: '마이 페이지', path: '/' },
+    { name: '샵', path: '/' },
 ];
 const state = reactive({
     email: undefined,
