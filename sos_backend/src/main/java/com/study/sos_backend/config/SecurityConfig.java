@@ -55,6 +55,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/**").hasAuthority(RoleType.ADMIN.getCode())
                         .requestMatchers("/api/v1/business/login","/api/v1/business/sign-up").permitAll()
                         .requestMatchers("/api/v1/business/**").hasAnyAuthority(RoleType.ADMIN.getCode(), RoleType.BUSINESS.getCode())
+                        .requestMatchers("/index.html").permitAll()
                         .anyRequest().authenticated())
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
