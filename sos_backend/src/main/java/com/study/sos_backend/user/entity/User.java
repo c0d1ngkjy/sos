@@ -54,7 +54,7 @@ public class User extends BaseTimeEntity {
     }
 
     private String passwordEncode(String rawPassword) {
-        if (rawPassword == null){
+        if (rawPassword == null) {
             return PasswordUtil.generateRandomPassword();
         }
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

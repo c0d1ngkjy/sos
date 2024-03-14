@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class Locate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "COORDINATE_ID", nullable = false)
+    @Column(name = "ID", nullable = false)
     private Long id;
 
     private Double latitude;
