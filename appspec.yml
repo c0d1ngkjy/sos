@@ -4,6 +4,7 @@ files:
   - source:  /
     destination: /home/ubuntu/action  # 이 디렉토리 내에 배포가 진행된다
     overwrite: yes
+file_exists_behavior: OVERWRITE
 
 permissions:
   - object: /
