@@ -71,11 +71,13 @@ public class JwtService {
 
         // 엑세스 토큰 쿠키 생성
         Cookie accessTokenCookie = new Cookie("access_token", accessToken);
+        accessTokenCookie.setMaxAge(accessTokenExpirationPeriod.intValue());
         accessTokenCookie.setPath("/");
         response.addCookie(accessTokenCookie);
 
         // 리프레시 토큰 쿠키 생성
         Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
+        refreshTokenCookie.setMaxAge(refreshTokenExpirationPeriod.intValue());
         refreshTokenCookie.setPath("/");
         refreshTokenCookie.setHttpOnly(true); // JavaScript 에서 접근 불가능하도록 설정
         response.addCookie(refreshTokenCookie);
