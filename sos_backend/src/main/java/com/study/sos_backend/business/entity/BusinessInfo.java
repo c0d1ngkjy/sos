@@ -1,14 +1,24 @@
 package com.study.sos_backend.business.entity;
 
+<<<<<<< HEAD
+import com.study.sos_backend.common.entity.Locate;
+=======
 import com.study.sos_backend.common.entity.Address;
 import com.study.sos_backend.common.entity.BaseTimeEntity;
 import com.study.sos_backend.common.entity.Locate;
 import com.study.sos_backend.user.entity.User;
+>>>>>>> main
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+<<<<<<< HEAD
+@Getter
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class BusinessInfo {
+=======
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Set;
@@ -18,6 +28,7 @@ import java.util.Set;
 @Table(name = "BUSINESS_INFO")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BusinessInfo extends BaseTimeEntity {
+>>>>>>> main
 
     /**
      * 미용실 정보에 대한 엔티티
@@ -25,13 +36,25 @@ public class BusinessInfo extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+<<<<<<< HEAD
+    @Column(name = "id", nullable = false)
+=======
     @Column(name = "ID", nullable = false)
+>>>>>>> main
     private Long id;
 
     /**
      *  이 사이에 미용실 정보 작성해두셍
      */
 
+<<<<<<< HEAD
+
+    // 위치 정보에 관한 엔티티
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "COORDINATE_ID")
+    private Locate locate;
+
+=======
     @Column(name = "COMP_NM", nullable = false)
     private String companyName; // 상호
 
@@ -84,4 +107,5 @@ public class BusinessInfo extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_EMAIL")
     private User user;
+>>>>>>> main
 }

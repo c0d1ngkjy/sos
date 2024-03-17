@@ -1,9 +1,14 @@
+<<<<<<< HEAD
+!/bin/bash
+BUILD_JAR=$(ls /home/ubuntu/action/build/libs/sos_backend-0.0.1-SNAPSHOT.jar)
+=======
 #!/bin/bash
 echo "> ./gradlew build 수행" >> /home/ubuntu/action/deploy.log
 cd /home/ubuntu/action/sos_backend/
 ./gradlew build
 
 BUILD_JAR=$(ls /home/ubuntu/action/sos_backend/build/libs/sos_backend-0.0.1-SNAPSHOT.jar)
+>>>>>>> main
 JAR_NAME=$(basename $BUILD_JAR)
 
 echo "> 현재 시간: $(date)" >> /home/ubuntu/action/deploy.log

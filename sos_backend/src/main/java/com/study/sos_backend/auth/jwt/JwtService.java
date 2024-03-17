@@ -3,7 +3,10 @@ package com.study.sos_backend.auth.jwt;
 import com.study.sos_backend.user.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+<<<<<<< HEAD
+=======
 import jakarta.servlet.http.Cookie;
+>>>>>>> main
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -68,6 +71,8 @@ public class JwtService {
 
         setAccessTokenHeader(response, accessToken);
         setRefreshTokenHeader(response, refreshToken);
+<<<<<<< HEAD
+=======
 
         // 엑세스 토큰 쿠키 생성
         Cookie accessTokenCookie = new Cookie("access_token", accessToken);
@@ -82,6 +87,7 @@ public class JwtService {
         refreshTokenCookie.setHttpOnly(true); // JavaScript 에서 접근 불가능하도록 설정
         response.addCookie(refreshTokenCookie);
 
+>>>>>>> main
         log.info("Access Token, Refresh Token 헤더 설정 완료");
     }
 
