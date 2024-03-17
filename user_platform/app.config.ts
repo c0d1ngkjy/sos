@@ -1,7 +1,6 @@
 export default defineAppConfig({
     title: 'salon_search',
     ui: {
-<<<<<<< HEAD
         primary: 'woodsmoke',
         gray: 'stone',
         icons: {
@@ -11,10 +10,3 @@ export default defineAppConfig({
 })
 
 
-=======
-        primary: 'green',
-        gray: 'stone'
-      }
-  })
-  
->>>>>>> main

@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
     <div :style="scrolled ? 'background-color:#1d1d1d; color:white' : 'background-color:white'"
         class="sticky top-0 z-10 bg-white flex flex-row justify-between items-center md:px-6 md:py-3 px-2 py-3">
         <div class="flex flex-row gap-8 items-center">
@@ -103,9 +102,3 @@ onBeforeUnmount(() => {
     window.removeEventListener('scroll', handleScroll);
 });
 </script>
-=======
-    <div>
-        header
-    </div>
-</template>
->>>>>>> main
