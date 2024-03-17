@@ -87,12 +87,12 @@ function handleKakaoLogin() {
     //     redirectUri: `${window.location.origin}/kakao-callback`,
     //     prompt: 'login',
     // });
-    // $router.go('http://43.201.246.72:8080/oauth2/authorization/kakao')
-    $fetch('http://43.201.246.72:8080/oauth2/authorization/kakao', {
-    method: 'POST',
-    }).then((res) => {
-        console.log(res)
-    })
+    $router.go('http://43.201.246.72:8080/oauth2/authorization/kakao')
+    // $fetch('http://43.201.246.72:8080/oauth2/authorization/kakao', {
+    // method: 'POST',
+    // }).then((res) => {
+    //     console.log(res)
+    // })
 }
 
 
