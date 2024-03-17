@@ -40,8 +40,10 @@
                     로그인
                 </UButton>
 
-                <UButton icon="i-heroicons-chat-bubble-oval-left" block @click="handleKakaoLogin" color="yellow"
-                    size="xl">카카오로 시작하기</UButton>
+                <UButton block @click="handleKakaoLogin" color="yellow"
+                    >
+                    <img src="~assets/imgs/kakao_login_medium_wide.png" alt="">
+                </UButton>
             </div>
 
             <div class="flex flex-row justify-evenly pt-1 pb-3 text-sm text-primary-300">
