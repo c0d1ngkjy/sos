@@ -1,2 +1,7 @@
 
 sos_backend/src/main/resources/application-oauth.properties
+sos_backend/src/main/resources/application-oauth.properties
+sos_backend/src/main/resources/application-oauth.properties
+*.properties
+sos_backend/src/main/resources/application-oauth.properties
+*.properties

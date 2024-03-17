@@ -55,12 +55,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/**").hasAuthority(RoleType.ADMIN.getCode())
                         .requestMatchers("/api/v1/business/login","/api/v1/business/sign-up").permitAll()
                         .requestMatchers("/api/v1/business/**").hasAnyAuthority(RoleType.ADMIN.getCode(), RoleType.BUSINESS.getCode())
-<<<<<<< HEAD
-                        .anyRequest().authenticated())
-=======
+
                         .requestMatchers("/api/v1/user").hasAnyAuthority(RoleType.ADMIN.getCode(), RoleType.BUSINESS.getCode(), RoleType.USER.getCode())
                         .anyRequest().permitAll())
->>>>>>> main
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
@@ -88,11 +85,8 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-<<<<<<< HEAD
-        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080"));
-=======
+
         config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080", "http://43.201.246.72:8080"));
->>>>>>> main
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("*"));

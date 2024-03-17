@@ -1,12 +1,12 @@
 package com.study.sos_backend.auth.jwt;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.sos_backend.user.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-<<<<<<< HEAD
-=======
+
 import jakarta.servlet.http.Cookie;
->>>>>>> main
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -14,8 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -66,28 +69,22 @@ public class JwtService {
     }
 
 
-    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
+    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) throws IOException {
         response.setStatus(HttpServletResponse.SC_OK);
 
         setAccessTokenHeader(response, accessToken);
         setRefreshTokenHeader(response, refreshToken);
-<<<<<<< HEAD
-=======
 
-        // 엑세스 토큰 쿠키 생성
-        Cookie accessTokenCookie = new Cookie("access_token", accessToken);
-        accessTokenCookie.setMaxAge(accessTokenExpirationPeriod.intValue());
-        accessTokenCookie.setPath("/");
-        response.addCookie(accessTokenCookie);
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("access_token", accessToken);
+        tokenMap.put("refresh_token", refreshToken);
+        String tokenJson = new ObjectMapper().writeValueAsString(tokenMap);
 
-        // 리프레시 토큰 쿠키 생성
-        Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
-        refreshTokenCookie.setMaxAge(refreshTokenExpirationPeriod.intValue());
-        refreshTokenCookie.setPath("/");
-        refreshTokenCookie.setHttpOnly(true); // JavaScript 에서 접근 불가능하도록 설정
-        response.addCookie(refreshTokenCookie);
+        // 응답 본문에 토큰 정보를 포함하는 JSON 전송
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(tokenJson);
 
->>>>>>> main
         log.info("Access Token, Refresh Token 헤더 설정 완료");
     }
 
