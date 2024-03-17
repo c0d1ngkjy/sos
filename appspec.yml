@@ -4,7 +4,10 @@ files:
   - source:  /
     destination: /home/ubuntu/action  # 이 디렉토리 내에 배포가 진행된다
     overwrite: yes
+<<<<<<< HEAD
+=======
 file_exists_behavior: OVERWRITE
+>>>>>>> main
 
 permissions:
   - object: /
@@ -16,4 +19,8 @@ hooks:
   ApplicationStart:
     - location: scripts/deploy.sh  #최상위 디렉토리의 script 폴더 내의 shell script가 실행된다.
       timeout: 60
+<<<<<<< HEAD
       runas: ubuntu
+=======
+      runas: ubuntu
+>>>>>>> main
