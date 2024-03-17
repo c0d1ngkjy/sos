@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
     <div class="bg-gray-200 flex flex-col px-6 py-3">
         <div class="bg-white px-6 py-4 rounded-lg">
             <div class="py-2 font-bold text-3xl">반가워요,<br />살롱 서치입니다.</div>
@@ -103,12 +102,4 @@ const items = [
         imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
 ]
-=======
-    <div class="flex flex-row justify-center py-52">
-        <div class="font-bold text-5xl">USERPLATFORM</div>
-    </div>
-</template>
-
-<script setup lang="ts">
->>>>>>> main
 </script>
