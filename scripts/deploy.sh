@@ -1,4 +1,8 @@
-!/bin/bash
+#!/bin/bash
+echo "> ./gradlew build 수행" >> /home/ubuntu/action/deploy.log
+cd /home/ubuntu/action/sos_backend/
+./gradlew build
+
 BUILD_JAR=$(ls /home/ubuntu/action/sos_backend/build/libs/sos_backend-0.0.1-SNAPSHOT.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 
