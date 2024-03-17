@@ -47,6 +47,11 @@ export default defineNuxtConfig({
       ]
     }
   },
+  routeRules: {
+    '/api/**': {
+        proxy: { to: "http://43.201.246.72:8080/**" },
+     },
+},
   
 
 })

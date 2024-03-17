@@ -40,7 +40,7 @@
                     로그인
                 </UButton>
 
-                <UButton block @click="handleKakaoLogin" color="yellow"
+                <UButton block color="yellow" @click="handleKakaoLogin"
                     >
                     <img src="~assets/imgs/kakao_login_medium_wide.png" alt="">
                 </UButton>
@@ -68,6 +68,7 @@ const tabs = [
 ];
 
 const route = useRoute()
+const $router = useRouter();
 
 const state = reactive({
     email: undefined,
@@ -79,14 +80,21 @@ async function onSubmit(event) {
 }
 
 function handleKakaoLogin() {
-    Kakao.init(runtimeConfig.public.kakaoJsApiKey);
-    console.log(Kakao.isInitialized());
+    // Kakao.init(runtimeConfig.public.kakaoJsApiKey);
+    // console.log(Kakao.isInitialized());
 
-    Kakao.Auth.authorize({
-        redirectUri: `${window.location.origin}/kakao-callback`,
-        prompt: 'login',
-    });
+    // Kakao.Auth.authorize({
+    //     redirectUri: `${window.location.origin}/kakao-callback`,
+    //     prompt: 'login',
+    // });
+    // $router.go('http://43.201.246.72:8080/oauth2/authorization/kakao')
+    $fetch('http://43.201.246.72:8080/oauth2/authorization/kakao', {
+    method: 'POST',
+    }).then((res) => {
+        console.log(res)
+    })
 }
+
 
 const scrolled = ref(false);
 const handleScroll = () => {
