@@ -52,6 +52,4 @@ export default defineNuxtConfig({
         proxy: { to: "http://43.201.246.72:8080/**" },
      },
 },
-  
-
 })
