@@ -9,12 +9,11 @@
 
             <div class="flex flex-row gap-3 max-sm:hidden">
                 <div v-for="nav in tabs">
-                    <nuxt-link
-                        :class="scrolled ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'"
-                        :to="nav.path">{{ nav.name }}</nuxt-link>
+                    <nuxt-link :to="nav.to">{{ nav.label }}</nuxt-link>
                 </div>
             </div>
         </div>
+
 
         <div class="max-sm:hidden float-end">
             <UButton @click="loginDialog = true" :color="scrolled ? 'white' : 'black'" variant="solid" class="px-4">로그인
@@ -59,12 +58,15 @@ const runtimeConfig = useRuntimeConfig();
 
 const loginDialog = ref(false);
 const tabs = [
-    { name: '홈', path: '/' },
-    { name: '내 주변', path: '/' },
-    { name: '예약', path: '/' },
-    { name: '마이 페이지', path: '/' },
-    { name: '샵', path: '/' },
+    { label: '홈', to: '/' },
+    { label: '내 주변', to: '/' },
+    { label: '예약', to: '/' },
+    { label: '마이 페이지', to: '/' },
+    { label: '샵', to: '/' },
 ];
+
+const route = useRoute()
+
 const state = reactive({
     email: undefined,
     password: undefined
