@@ -40,9 +40,8 @@
                     로그인
                 </UButton>
 
-                <UButton block color="yellow" @click="handleKakaoLogin"
+                <UButton style="background-image: url('kakao_login_medium_wide.png'); background-position: center center; background-repeat: no-repeat; height: 44px;" size="xl" block color="yellow" @click="handleKakaoLogin"
                     >
-                    <img src="~assets/imgs/kakao_login_medium_wide.png" alt="">
                 </UButton>
             </div>
 
@@ -79,7 +78,7 @@ async function onSubmit(event) {
     console.log(event.data)
 }
 
-function handleKakaoLogin() {
+async function handleKakaoLogin() {
     // Kakao.init(runtimeConfig.public.kakaoJsApiKey);
     // console.log(Kakao.isInitialized());
 
@@ -87,12 +86,8 @@ function handleKakaoLogin() {
     //     redirectUri: `${window.location.origin}/kakao-callback`,
     //     prompt: 'login',
     // });
-    $router.go('http://43.201.246.72:8080/oauth2/authorization/kakao')
-    // $fetch('http://43.201.246.72:8080/oauth2/authorization/kakao', {
-    // method: 'POST',
-    // }).then((res) => {
-    //     console.log(res)
-    // })
+    const loginResponse = await useFetch('http://43.201.246.72:8080/oauth2/authorization/kakao')
+    console.log(loginResponse)
 }
 
 

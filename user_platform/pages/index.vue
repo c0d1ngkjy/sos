@@ -10,6 +10,10 @@
             </div>
         </div>
 
+        <div class="mt-3 text-center">
+            <GeoLocation />
+        </div>
+
         <div class="my-3 px-6 py-4 bg-white rounded-lg flex justify-between items-center">
             <div class="text-xs md:text-lg">다른 지역의 미용실을 찾고 계신가요?</div>
             <UButton color="black">위치 변경하기</UButton>
@@ -45,7 +49,8 @@
                 </div>
             </div>
         </div>
-
+        
+        
     </div>
 </template>
 
@@ -54,37 +59,47 @@ const items = [
     {
         index: 1,
         name: 'haeyoom',
-        imgUrl: 'https://picsum.photos/600/800?random=1',
+        imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
     {
         index: 1,
         name: 'haeyoom',
-        imgUrl: 'https://picsum.photos/600/800?random=1',
+        imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
     {
         index: 1,
         name: 'haeyoom',
-        imgUrl: 'https://picsum.photos/600/800?random=1',
+        imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
     {
         index: 1,
         name: 'haeyoom',
-        imgUrl: 'https://picsum.photos/600/800?random=1',
+        imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
     {
         index: 1,
         name: 'haeyoom',
-        imgUrl: 'https://picsum.photos/600/800?random=1',
+        imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
     {
         index: 1,
         name: 'haeyoom',
-        imgUrl: 'https://picsum.photos/600/800?random=1',
+        imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
     {
         index: 1,
         name: 'haeyoom',
-        imgUrl: 'https://picsum.photos/600/800?random=1',
+        imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
+    },
+    {
+        index: 1,
+        name: 'haeyoom',
+        imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
+    },
+    {
+        index: 1,
+        name: 'haeyoom',
+        imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
 ]
 </script>
