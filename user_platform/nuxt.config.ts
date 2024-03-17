@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+<<<<<<< HEAD
   modules: ['@nuxt/ui'],
   colorMode: {
     preference: 'light'
@@ -52,4 +53,10 @@ export default defineNuxtConfig({
         proxy: { to: "http://43.201.246.72:8080/**" },
      },
 },
+=======
+  colorMode: {
+    preference: 'light'
+  },
+  modules: ['@nuxt/ui'],
+>>>>>>> main
 })

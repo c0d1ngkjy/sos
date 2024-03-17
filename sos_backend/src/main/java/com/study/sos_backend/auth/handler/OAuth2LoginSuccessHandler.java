@@ -19,9 +19,15 @@ import java.io.IOException;
 @Slf4j
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
+<<<<<<< HEAD
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private static final String AUTHORIZATION_CODE = "Bearer ";
+=======
+    private static final String AUTHORIZATION_CODE = "Bearer ";
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
+>>>>>>> main
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -68,7 +74,15 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.addHeader(jwtService.getAccessHeader(), AUTHORIZATION_CODE + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), AUTHORIZATION_CODE + refreshToken);
 
+<<<<<<< HEAD
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
+=======
+
+        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
+        jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
+
+        response.sendRedirect("http://localhost:3000/");
+>>>>>>> main
     }
 }
