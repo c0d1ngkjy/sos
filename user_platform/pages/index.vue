@@ -62,22 +62,22 @@ const items = [
         imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
     {
-        index: 1,
+        index: 2,
         name: 'haeyoom',
         imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
     {
-        index: 1,
+        index: 3,
         name: 'haeyoom',
         imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
     {
-        index: 1,
+        index: 4,
         name: 'haeyoom',
         imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },
     {
-        index: 1,
+        index: 5,
         name: 'haeyoom',
         imgUrl: 'https://modo-phinf.pstatic.net/20210122_116/1611280437591fxcIm_JPEG/mosatCIAUP.jpeg?type=a1100',
     },

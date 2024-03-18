@@ -2,9 +2,9 @@
   <div class="bg-white rounded-lg px-6 py-3">
     <div class="font-semibold text-xl text-left py-3">현재 검색 위치</div>
 
-    <div class="flex max-sm:flex-col items-center">
+    <div class="flex flex-col items-center">
       <div id="map" style="width:100%; height: 40vh;"></div>
-      <div>{{ strLoc.road_address?.address_name }}</div>
+      <div class="bg-gray-200 rounded-md py-2 px-4 mt-2">{{ strLoc.road_address?.address_name }}</div>
     </div>
 
   </div>
