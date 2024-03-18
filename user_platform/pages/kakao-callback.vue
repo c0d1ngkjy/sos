@@ -1,10 +1,16 @@
 <template>
-    <div class="h-screen flex flex-col justify-center items-center text-lg">
-        <div>인가코드 : <span class="text-red-500">{{ $route.query.code }}</span></div>
+    <div class="h-screen">
     </div>
 </template>
 
 <script setup>
-//const $route = useRoute();
-//console.log($route.query.code)
+const $route = useRoute();
+const $router = useRouter();
+
+const accessToken = useCookie('accessToken')
+const refreshToken = useCookie('refreshToken')
+accessToken.value = $route.query.accessToken
+refreshToken.value = $route.query.refreshToken;
+
+$router.push('/')
 </script>

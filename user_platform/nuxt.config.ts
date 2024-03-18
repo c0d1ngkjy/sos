@@ -29,7 +29,8 @@ export default defineNuxtConfig({
         // <script src="https://myawesome-lib.js"></script>
         //{ src: 'https://awesome-lib.js' }
         // { src: 'https://developers.kakao.com/sdk/js/kakao.min.js' }
-        { src: 'https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js' }
+        { src: 'https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js'},
+        { src: `//dapi.kakao.com/v2/maps/sdk.js?appkey=972c8d91b867f0c29eba9f84b5492831`}
         //<script src="" integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8" crossorigin="anonymous"></script>
       ],
       link: [

@@ -16,8 +16,11 @@
 
 
         <div class="max-sm:hidden float-end">
-            <UButton @click="loginDialog = true" :color="scrolled ? 'white' : 'black'" variant="solid" class="px-4">로그인
+            <UButton v-if="!user.isLoggedIn" @click="loginDialog = true" :color="scrolled ? 'white' : 'black'" variant="solid" class="px-4">로그인
             </UButton>
+            <UButton v-if="user.isLoggedIn" @click="logout" :color="scrolled ? 'white' : 'black'" variant="solid" class="px-4">로그아웃
+            </UButton>
+
         </div>
 
         <UButton @click="loginDialog = true" :color="scrolled ? 'white' : 'black'" class="sm:hidden"
@@ -40,8 +43,9 @@
                     로그인
                 </UButton>
 
-                <UButton style="background-image: url('kakao_login_medium_wide.png'); background-position: center center; background-repeat: no-repeat; height: 44px;" size="xl" block color="yellow" @click="handleKakaoLogin"
-                    >
+                <UButton
+                    style="background-image: url('kakao_login_medium_wide.png'); background-position: center center; background-repeat: no-repeat; height: 44px;"
+                    size="xl" block color="yellow" @click="handleKakaoLogin">
                 </UButton>
             </div>
 
@@ -55,8 +59,6 @@
 </template>
 
 <script setup>
-const runtimeConfig = useRuntimeConfig();
-
 const loginDialog = ref(false);
 const tabs = [
     { label: '홈', to: '/' },
@@ -86,18 +88,40 @@ async function handleKakaoLogin() {
     //     redirectUri: `${window.location.origin}/kakao-callback`,
     //     prompt: 'login',
     // });
-    const loginResponse = await useFetch('http://43.201.246.72:8080/oauth2/authorization/kakao')
-    console.log(loginResponse)
+    //$router.replace("http://43.201.246.72:8080/oauth2/authorization/kakao")
+    window.location.href = 'http://43.201.246.72:8080/oauth2/authorization/kakao';
+
+    //const loginResponse = await useFetch('http://43.201.246.72:8080/oauth2/authorization/kakao')
+    //console.log(loginResponse)
 }
 
-
 const scrolled = ref(false);
+
 const handleScroll = () => {
     scrolled.value = window.scrollY > 10;
 };
+
+const user = ref({isLoggedIn: false})
 onMounted(() => {
     window.addEventListener('scroll', handleScroll);
+
+    const accessToken = useCookie('accessToken')
+    if(accessToken.value != null) {
+        user.value.isLoggedIn = true;
+        
+        console.log(accessToken.value)
+    }
 })
+const toast = useToast();
+function logout() {
+        const accessToken = useCookie('accessToken')
+        const refreshToken = useCookie('refreshToken')
+        accessToken.value = null
+        refreshToken.value = null
+        user.value.isLoggedIn = false
+        toast.add({title: '로그아웃 성공', timeout: 1000})
+}
+
 onBeforeUnmount(() => {
     window.removeEventListener('scroll', handleScroll);
 });
