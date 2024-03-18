@@ -1,7 +1,10 @@
 package com.study.sos_backend.business.controller;
 
+import com.study.sos_backend.business.dto.BusinessInfoResponseDto;
 import com.study.sos_backend.business.dto.BusinessUserCreateDto;
 import com.study.sos_backend.business.dto.BusinessUserInfoResponseDto;
+import com.study.sos_backend.business.service.BusinessInfoService;
+import com.study.sos_backend.user.dto.UserInfoResponseDto;
 import com.study.sos_backend.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,16 +13,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -27,15 +26,28 @@ import java.net.URI;
 @RequestMapping("/api/v1/business")
 @RequiredArgsConstructor
 @Slf4j
-public class BusinessUserController {
+public class BusinessController {
 
     private final UserService userService;
+    private final BusinessInfoService businessInfoService;
 
+
+
+    @GetMapping("/{id}")
+    @Operation(summary = "비즈니스 ID 정보 확인", description = "ID 파라미터로 비즈니스 정보를 확인합니다.")
+    public ResponseEntity<BusinessInfoResponseDto> getBusinessInfo(@PathVariable Long id) {
+        try {
+            BusinessInfoResponseDto businessInfo = businessInfoService.getBusinessInfo(id);
+            return ResponseEntity.ok(businessInfo);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
     @PostMapping("/login")
     @Operation(summary = "비즈니스 로그인", description = "비즈니스 로그인 실행")
     public void login(@RequestBody LoginDto loginDto) {
-            log.info(String.valueOf(loginDto));
+        log.info(String.valueOf(loginDto));
     }
 
     @Operation(summary = "비즈니스 계정 생성", description = "비즈니스 계정을 생성합니다.")
@@ -47,11 +59,12 @@ public class BusinessUserController {
     public ResponseEntity<BusinessUserInfoResponseDto> createBusiness(@RequestBody BusinessUserCreateDto createDto) {
         try {
             userService.createBusinessUser(createDto);
-            return ResponseEntity.created(URI.create("http://localhost:3000/")).build();
+            return ResponseEntity.ok(new BusinessUserInfoResponseDto(createDto));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
+
 
     @Data
     private static class LoginDto {

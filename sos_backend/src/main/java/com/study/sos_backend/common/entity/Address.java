@@ -1,5 +1,6 @@
 package com.study.sos_backend.common.entity;
 
+import com.study.sos_backend.common.dto.AddressDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,5 +28,9 @@ public class Address {
         this.roadAddress = roadAddress;
         this.detailAddress = detailAddress;
         this.postalCode = postalCode;
+    }
+
+    public static Address toEntity(AddressDto addressDto) {
+        return new Address(addressDto.getRoadAddress(), addressDto.getDetailAddress(), addressDto.getPostalCode());
     }
 }

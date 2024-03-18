@@ -1,5 +1,6 @@
 package com.study.sos_backend.common.entity;
 
+import com.study.sos_backend.common.dto.LocateDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,5 +22,9 @@ public class Locate {
     public Locate(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public static Locate toEntity(LocateDto locateDto){
+        return new Locate(locateDto.getLatitude(), locateDto.getLongitude());
     }
 }
