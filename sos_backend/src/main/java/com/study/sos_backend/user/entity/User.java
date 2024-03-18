@@ -1,7 +1,9 @@
 package com.study.sos_backend.user.entity;
 
 import com.study.sos_backend.auth.utils.PasswordUtil;
+import com.study.sos_backend.business.entity.BusinessInfo;
 import com.study.sos_backend.common.entity.BaseTimeEntity;
+import com.study.sos_backend.user.dto.UserUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,6 +11,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,11 +43,13 @@ public class User extends BaseTimeEntity {
 
     private String refreshToken;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BusinessInfo> businessInfoList = new ArrayList<>();
+
 
     @Builder
     public User(String email, String password, String socialId, ProviderType providerType, RoleType roleType) {
         this.email = email;
-
         this.password = passwordEncode(password);
         this.socialId = socialId;
         this.providerType = providerType;
@@ -59,5 +66,9 @@ public class User extends BaseTimeEntity {
         }
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(rawPassword);
+    }
+
+    public void update(UserUpdateRequestDto requestDto){
+        this.email = requestDto.getEmail();
     }
 }
