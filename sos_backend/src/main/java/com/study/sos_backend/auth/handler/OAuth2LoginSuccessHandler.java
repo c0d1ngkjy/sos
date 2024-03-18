@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -19,16 +20,15 @@ import java.io.IOException;
 @Slf4j
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-
     private static final String AUTHORIZATION_CODE = "Bearer ";
-    private static final String FRONTEND_URL = "http://localhost:3000/kakao";
     private static final String QUERY_START_MARK = "?";
     private static final String QUERY_AND_MARK = "&";
     private static final String QUERY_PARAM_ACCESS_TOKEN_KEY = "accessToken=";
     private static final String QUERY_PARAM_REFRESH_TOKEN_KEY = "refreshToken=";
     private final JwtService jwtService;
     private final UserRepository userRepository;
-
+    @Value("${frontend.server.url}")
+    private String frontendUrl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -78,12 +78,13 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
 
-        response.sendRedirect(generateUrl(accessToken, refreshToken));
+        response.sendRedirect(generateUrl("kakao-callback", accessToken, refreshToken));
     }
 
-    private String generateUrl(final String accessToken, final String refreshToken) {
+    private String generateUrl(final String redirectPath, final String accessToken, final String refreshToken) {
         StringBuilder sb = new StringBuilder();
-        StringBuilder url = sb.append(FRONTEND_URL)
+        StringBuilder url = sb.append(frontendUrl)
+                .append(redirectPath)
                 .append(QUERY_START_MARK)
                 .append(QUERY_PARAM_ACCESS_TOKEN_KEY)
                 .append(accessToken)

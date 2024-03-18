@@ -69,21 +69,11 @@ public class JwtService {
     }
 
 
-    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) throws IOException {
+    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
         response.setStatus(HttpServletResponse.SC_OK);
 
         setAccessTokenHeader(response, accessToken);
         setRefreshTokenHeader(response, refreshToken);
-
-        Map<String, String> tokenMap = new HashMap<>();
-        tokenMap.put("access_token", accessToken);
-        tokenMap.put("refresh_token", refreshToken);
-        String tokenJson = new ObjectMapper().writeValueAsString(tokenMap);
-
-        // 응답 본문에 토큰 정보를 포함하는 JSON 전송
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(tokenJson);
 
         log.info("Access Token, Refresh Token 헤더 설정 완료");
     }
