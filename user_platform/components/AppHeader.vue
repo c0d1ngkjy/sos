@@ -109,7 +109,7 @@ onMounted(() => {
     if(accessToken.value != null) {
         user.value.isLoggedIn = true;
         
-        console.log(accessToken.value)
+        //console.log(accessToken.value)
     }
 })
 const toast = useToast();

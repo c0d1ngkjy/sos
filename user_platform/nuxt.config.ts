@@ -9,7 +9,8 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      kakaoJsApiKey: '972c8d91b867f0c29eba9f84b5492831'
+      kakaoJsApiKey: '972c8d91b867f0c29eba9f84b5492831',
+      kakaoRestApiKey: '2dd24412d30865e308ac6f7e62e26a60'
     }
   },
   tailwindcss: {

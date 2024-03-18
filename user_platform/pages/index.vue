@@ -41,7 +41,7 @@
         <div class="rounded-lg bg-white px-6 py-4">
             <div class="font-semibold text-xl">내 주변 미용실</div>
             <div v-for="x in 12" class="flex items-center gap-4 my-5 hover:bg-gray-200 py-4 px-4 rounded-md">
-                <UAvatar size="2xl"></UAvatar>
+                <USkeleton class="h-[120px] w-[120px]"></USkeleton>
                 <div>
                     <div>미용실 {{ x }}</div>
                     <div>거리 : 3.4km</div>
