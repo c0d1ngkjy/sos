@@ -2,14 +2,16 @@ package com.study.sos_backend.user.service;
 
 import com.study.sos_backend.auth.jwt.JwtService;
 import com.study.sos_backend.business.dto.BusinessUserCreateDto;
-import com.study.sos_backend.business.entity.BusinessInfo;
-import com.study.sos_backend.business.repository.BusinessInfoRepository;
+import com.study.sos_backend.business.entity.Business;
+import com.study.sos_backend.business.repository.BusinessRepository;
+import com.study.sos_backend.business.service.BusinessService;
 import com.study.sos_backend.user.dto.UserInfoResponseDto;
 import com.study.sos_backend.user.dto.UserUpdateRequestDto;
 import com.study.sos_backend.user.dto.UserUpdateResponseDto;
 import com.study.sos_backend.user.entity.RoleType;
 import com.study.sos_backend.user.entity.User;
 import com.study.sos_backend.user.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final BusinessInfoRepository businessInfoRepository;
+    private final BusinessRepository businessRepository;
     private final JwtService jwtService;
+    private final BusinessService businessService;
 
     // GET
     public UserInfoResponseDto getUser(String email) {
@@ -48,21 +51,21 @@ public class UserService {
                 .password(createDto.getPassword())
                 .build();
 
-        BusinessInfo businessInfo = BusinessInfo.toEntity(createDto, user);
+        Business business = Business.toEntity(createDto, user);
 
         userRepository.save(user);
-        businessInfoRepository.save(businessInfo);
+        businessRepository.save(business);
 
     }
 
     // UPDATE
     @Transactional
-    public UserUpdateResponseDto updateUser(String email, UserUpdateRequestDto requestDto){
-        if (userRepository.existsAllByEmail(requestDto.getEmail())){
+    public UserUpdateResponseDto updateUser(String email, UserUpdateRequestDto requestDto) {
+        if (userRepository.existsAllByEmail(requestDto.getEmail())) {
             throw new IllegalStateException();
         }
 
-        User user = userRepository.findByEmail(email).orElseThrow(IllegalStateException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
 
         // 새로운 이메일로 토큰을 만듦니다.
         String accessToken = jwtService.createAccessToken(requestDto.getEmail());
@@ -76,7 +79,21 @@ public class UserService {
         return new UserUpdateResponseDto(accessToken, refreshToken, user);
     }
 
-    public boolean verifyEmail(String email){
+    // DELETE
+    @Transactional
+    public void deleteUser(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+        userRepository.delete(user);
+    }
+
+    @Transactional
+    public void deleteBusinessUser(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+        businessRepository.deleteAllByUser(user);
+        userRepository.delete(user);
+    }
+
+    public boolean verifyEmail(String email) {
         return !userRepository.existsAllByEmail(email);
     }
 }

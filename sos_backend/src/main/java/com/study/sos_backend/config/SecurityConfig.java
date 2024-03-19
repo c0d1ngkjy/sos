@@ -52,11 +52,11 @@ public class SecurityConfig {
                 // CORS 관련 처리
                 .authorizeHttpRequests(a -> a.requestMatchers("/swagger-resources/**", "/swagger-ui/index.html", "/swagger-ui/**", "/webjars/**", "/swagger/**", "/v3/**", "/css/** ", "/images/**", "/js/**").permitAll()
                         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                        .requestMatchers("/api/v1/admin/**").hasAuthority(RoleType.ADMIN.getCode())
-                        .requestMatchers("/api/v1/business/login","/api/v1/business/sign-up").permitAll()
-                        .requestMatchers("/api/v1/business/**").hasAnyAuthority(RoleType.ADMIN.getCode(), RoleType.BUSINESS.getCode())
-
-                        .requestMatchers("/api/v1/user").hasAnyAuthority(RoleType.ADMIN.getCode(), RoleType.BUSINESS.getCode(), RoleType.USER.getCode())
+                        // TODO 실제 서비스 시작 시 주석 풀기
+//                        .requestMatchers("/api/v1/admin/**").hasAuthority(RoleType.ADMIN.getCode())
+//                        .requestMatchers("/api/v1/business/login","/api/v1/business/sign-up").permitAll()
+//                        .requestMatchers("/api/v1/business/**").hasAnyAuthority(RoleType.ADMIN.getCode(), RoleType.BUSINESS.getCode())
+//                        .requestMatchers("/api/v1/user", "/api/v1/reservation").hasAnyAuthority(RoleType.ADMIN.getCode(), RoleType.BUSINESS.getCode(), RoleType.USER.getCode())
                         .anyRequest().permitAll())
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)

@@ -1,8 +1,9 @@
 package com.study.sos_backend.user.entity;
 
 import com.study.sos_backend.auth.utils.PasswordUtil;
-import com.study.sos_backend.business.entity.BusinessInfo;
+import com.study.sos_backend.business.entity.Business;
 import com.study.sos_backend.common.entity.BaseTimeEntity;
+import com.study.sos_backend.reservation.entity.Reservation;
 import com.study.sos_backend.user.dto.UserUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -44,7 +45,10 @@ public class User extends BaseTimeEntity {
     private String refreshToken;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BusinessInfo> businessInfoList = new ArrayList<>();
+    private List<Business> businessList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
 
 
     @Builder
@@ -68,7 +72,7 @@ public class User extends BaseTimeEntity {
         return passwordEncoder.encode(rawPassword);
     }
 
-    public void update(UserUpdateRequestDto requestDto){
+    public void update(UserUpdateRequestDto requestDto) {
         this.email = requestDto.getEmail();
     }
 }

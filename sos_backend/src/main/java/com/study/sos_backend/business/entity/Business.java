@@ -1,27 +1,30 @@
 package com.study.sos_backend.business.entity;
 
 
+import com.study.sos_backend.business.dto.BusinessInfoUpdateRequestDto;
 import com.study.sos_backend.business.dto.BusinessUserCreateDto;
 import com.study.sos_backend.common.entity.Address;
 import com.study.sos_backend.common.entity.BaseTimeEntity;
 import com.study.sos_backend.common.entity.Locate;
+import com.study.sos_backend.reservation.entity.Reservation;
 import com.study.sos_backend.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
 @Entity
 @Table(name = "BUSINESS_INFO")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BusinessInfo extends BaseTimeEntity {
+public class Business extends BaseTimeEntity {
 
     /**
      * 미용실 정보에 대한 엔티티
@@ -69,11 +72,9 @@ public class BusinessInfo extends BaseTimeEntity {
     @Column(nullable = false)
     private String keyword; // 서비스 키워드(주차 가능, 인터넷 등)
 
-    @DateTimeFormat(pattern = "HH:mm")
     @Column(name = "SERVICE_START_HOUR")
     private LocalTime serviceStartHour; // 영업 시작 시간
 
-    @DateTimeFormat(pattern = "HH:mm")
     @Column(name = "SERVICE_END_HOUR")
     private LocalTime serviceEndHour; // 영업 종료 시간
 
@@ -94,8 +95,11 @@ public class BusinessInfo extends BaseTimeEntity {
     @JoinColumn(name = "USER_EMAIL")
     private User user;
 
+    @OneToMany(mappedBy = "business", fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
+
     @Builder
-    public BusinessInfo(String companyName, String representativeName, String companyEmail, String companyRegisterName, Address address, String companyTel, String lineIntroduce, String locationInfo, String introduce, String keyword, LocalTime serviceStartHour, LocalTime serviceEndHour, Set<DayOfWeek> serviceDaysOfWeek, Locate locate, User user) {
+    public Business(String companyName, String representativeName, String companyEmail, String companyRegisterName, Address address, String companyTel, String lineIntroduce, String locationInfo, String introduce, String keyword, LocalTime serviceStartHour, LocalTime serviceEndHour, Set<DayOfWeek> serviceDaysOfWeek, Locate locate, User user) {
         this.companyName = companyName;
         this.representativeName = representativeName;
         this.companyEmail = companyEmail;
@@ -113,8 +117,8 @@ public class BusinessInfo extends BaseTimeEntity {
         this.user = user;
     }
 
-    public static BusinessInfo toEntity(BusinessUserCreateDto createDto, User user){
-        return BusinessInfo.builder()
+    public static Business toEntity(BusinessUserCreateDto createDto, User user){
+        return Business.builder()
                 .companyName(createDto.getCompanyName())
                 .representativeName(createDto.getRepresentativeName())
                 .companyEmail(createDto.getCompanyEmail())
@@ -131,6 +135,23 @@ public class BusinessInfo extends BaseTimeEntity {
                 .locate(Locate.toEntity(createDto.getLocate()))
                 .user(user)
                 .build();
+    }
+
+    public void update(BusinessInfoUpdateRequestDto updateRequestDto){
+        this.companyName = updateRequestDto.getCompanyName();
+        this.representativeName = updateRequestDto.getRepresentativeName();
+        this.companyEmail = updateRequestDto.getCompanyEmail();
+        this.companyRegisterName = updateRequestDto.getCompanyRegisterName();
+        this.address = Address.toEntity(updateRequestDto.getAddress());
+        this.companyTel = updateRequestDto.getCompanyTel();
+        this.lineIntroduce = updateRequestDto.getIntroduce();
+        this.locationInfo = updateRequestDto.getLocationInfo();
+        this.introduce = updateRequestDto.getIntroduce();
+        this.keyword = updateRequestDto.getKeyword();
+        this.serviceStartHour = updateRequestDto.getServiceStartHour();
+        this.serviceEndHour = updateRequestDto.getServiceEndHour();
+        this.serviceDaysOfWeek =  updateRequestDto.getServiceDaysOfWeek();
+        this.locate = Locate.toEntity(updateRequestDto.getLocate());
     }
 
 }

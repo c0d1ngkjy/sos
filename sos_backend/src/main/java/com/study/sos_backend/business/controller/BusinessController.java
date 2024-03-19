@@ -1,26 +1,30 @@
 package com.study.sos_backend.business.controller;
 
 import com.study.sos_backend.business.dto.BusinessInfoResponseDto;
+import com.study.sos_backend.business.dto.BusinessInfoUpdateRequestDto;
 import com.study.sos_backend.business.dto.BusinessUserCreateDto;
 import com.study.sos_backend.business.dto.BusinessUserInfoResponseDto;
-import com.study.sos_backend.business.service.BusinessInfoService;
-import com.study.sos_backend.user.dto.UserInfoResponseDto;
+import com.study.sos_backend.business.service.BusinessService;
 import com.study.sos_backend.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/business")
@@ -29,19 +33,50 @@ import java.net.URI;
 public class BusinessController {
 
     private final UserService userService;
-    private final BusinessInfoService businessInfoService;
-
+    private final BusinessService businessService;
 
 
     @GetMapping("/{id}")
     @Operation(summary = "비즈니스 ID 정보 확인", description = "ID 파라미터로 비즈니스 정보를 확인합니다.")
     public ResponseEntity<BusinessInfoResponseDto> getBusinessInfo(@PathVariable Long id) {
         try {
-            BusinessInfoResponseDto businessInfo = businessInfoService.getBusinessInfo(id);
+            BusinessInfoResponseDto businessInfo = businessService.getBusinessInfo(id);
             return ResponseEntity.ok(businessInfo);
-        } catch (IllegalArgumentException e) {
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PreAuthorize("hasRole('ROLE_BUSINESS')")
+    @GetMapping()
+    @Operation(summary = "사용자의 비즈니스 정보 모두 반환", description = "비즈니스 사용자의 모든 비즈니스 정보를 반환합니다.")
+    public ResponseEntity<List<BusinessInfoResponseDto>> getAllBusinessInfos() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        try {
+            List<BusinessInfoResponseDto> infoResponseDtos = businessService.getAllByUser(email);
+            return ResponseEntity.ok(infoResponseDtos);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_BUSINESS')")
+    @PutMapping("/{id}")
+    @Operation(summary = "비즈니스 정보 수정", description = "비즈니스 유저가 자신의 비즈니스 정보를 수정합니다. 이때, 해당 비즈니스 관리자가 아니면 거부합니다.")
+    public ResponseEntity<BusinessInfoResponseDto> updateBusinessInfo(@PathVariable Long id, @RequestBody BusinessInfoUpdateRequestDto updateRequestDto) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        try {
+            BusinessInfoResponseDto responseDto = businessService.updateBusinessInfo(id, email, updateRequestDto);
+            return ResponseEntity.ok(responseDto);
+        } catch (IllegalAccessException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PostMapping("/login")

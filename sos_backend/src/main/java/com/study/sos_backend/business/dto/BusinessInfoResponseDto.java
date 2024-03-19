@@ -1,9 +1,9 @@
 package com.study.sos_backend.business.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import com.study.sos_backend.business.entity.BusinessInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.study.sos_backend.business.entity.Business;
 import com.study.sos_backend.common.dto.AddressDto;
 import com.study.sos_backend.common.dto.LocateDto;
 import lombok.Data;
@@ -14,10 +14,11 @@ import java.time.LocalTime;
 import java.util.Set;
 
 /**
- * DTO for {@link com.study.sos_backend.business.entity.BusinessInfo}
+ * DTO for {@link Business}
  */
 @Data
 public class BusinessInfoResponseDto {
+    Long id;
     LocalDateTime createdDate;
     LocalDateTime modifiedDate;
     String companyName;
@@ -30,33 +31,34 @@ public class BusinessInfoResponseDto {
     String locationInfo;
     String introduce;
     String keyword;
-    @JsonSerialize(using = LocalTimeSerializer.class)
-    @JsonFormat(pattern="HH:mm")
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
+    @JsonFormat(pattern = "HH:mm", shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
     LocalTime serviceStartHour;
-    @JsonSerialize(using = LocalTimeSerializer.class)
-    @JsonFormat(pattern="HH:mm")
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
+    @JsonFormat(pattern = "HH:mm", shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
     LocalTime serviceEndHour;
     Set<DayOfWeek> serviceDaysOfWeek;
     LocateDto locate;
 
 
-    public BusinessInfoResponseDto(BusinessInfo businessInfo) {
-        this.createdDate = businessInfo.getCreatedDate();
-        this.modifiedDate = businessInfo.getModifiedDate();
-        this.companyName = businessInfo.getCompanyName();
-        this.representativeName = businessInfo.getRepresentativeName();
-        this.companyEmail = businessInfo.getCompanyEmail();
-        this.companyRegisterName = businessInfo.getCompanyRegisterName();
-        this.companyTel = businessInfo.getCompanyTel();
-        this.lineIntroduce = businessInfo.getLineIntroduce();
-        this.locationInfo = businessInfo.getLocationInfo();
-        this.introduce = businessInfo.getIntroduce();
-        this.keyword = businessInfo.getKeyword();
-        this.serviceStartHour = businessInfo.getServiceStartHour();
-        this.serviceEndHour = businessInfo.getServiceEndHour();
-        this.serviceDaysOfWeek = businessInfo.getServiceDaysOfWeek();
-        this.locate = new LocateDto(businessInfo.getLocate());
-        this.address = new AddressDto(businessInfo.getAddress());
+    public BusinessInfoResponseDto(Business business) {
+        this.id = business.getId();
+        this.createdDate = business.getCreatedDate();
+        this.modifiedDate = business.getModifiedDate();
+        this.companyName = business.getCompanyName();
+        this.representativeName = business.getRepresentativeName();
+        this.companyEmail = business.getCompanyEmail();
+        this.companyRegisterName = business.getCompanyRegisterName();
+        this.companyTel = business.getCompanyTel();
+        this.lineIntroduce = business.getLineIntroduce();
+        this.locationInfo = business.getLocationInfo();
+        this.introduce = business.getIntroduce();
+        this.keyword = business.getKeyword();
+        this.serviceStartHour = business.getServiceStartHour();
+        this.serviceEndHour = business.getServiceEndHour();
+        this.serviceDaysOfWeek = business.getServiceDaysOfWeek();
+        this.locate = new LocateDto(business.getLocate());
+        this.address = new AddressDto(business.getAddress());
 
     }
 }
