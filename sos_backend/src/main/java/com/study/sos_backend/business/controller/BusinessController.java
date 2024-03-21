@@ -62,6 +62,8 @@ public class BusinessController {
         }
     }
 
+    // TODO 비즈니스 추가
+
     @PreAuthorize("hasRole('ROLE_BUSINESS')")
     @PutMapping("/{id}")
     @Operation(summary = "비즈니스 정보 수정", description = "비즈니스 유저가 자신의 비즈니스 정보를 수정합니다. 이때, 해당 비즈니스 관리자가 아니면 거부합니다.")

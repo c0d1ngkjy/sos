@@ -14,6 +14,8 @@ import com.study.sos_backend.user.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,13 +36,24 @@ public class UserService {
         return new UserInfoResponseDto(user);
     }
 
-    // TODO 일반 유저 권한에서는 사용하면 안되는 메소드
+    /**
+     * 일반 유저 사용 금지
+     * @param id 아이디
+     * @return UserInfoResponseDto
+     */
     public UserInfoResponseDto getUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(IllegalStateException::new);
 
         return new UserInfoResponseDto(user);
     }
 
+    public Page<UserInfoResponseDto> getUsers(Pageable pageable){
+        return userRepository.getUsers(pageable);
+    }
+
+    public UserInfoResponseDto getBusinessOwner(Long id){
+        return userRepository.getBusinessOwner(id).orElseThrow(EntityNotFoundException::new);
+    }
 
     // CREATE
     @Transactional
@@ -89,7 +102,7 @@ public class UserService {
     @Transactional
     public void deleteBusinessUser(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
-        businessRepository.deleteAllByUser(user);
+        businessRepository.deleteAllByOwner(user);
         userRepository.delete(user);
     }
 

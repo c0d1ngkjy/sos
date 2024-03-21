@@ -42,23 +42,11 @@ public class UserController {
     }
 
 
-    // TODO 나중에 삭제해야 됨
-    @GetMapping("/{id}")
-    @Operation(summary = "ID 사용자 정보 반환(테스트용, 삭제하거나 어드민 이상만)", description = "ID 파라미터를 통해 사용자의 유저 정보를 반환합니다.")
-    public ResponseEntity<UserInfoResponseDto> getUserInfo(@PathVariable Long id) {
-        try {
-            UserInfoResponseDto user = userService.getUser(id);
-            return ResponseEntity.ok(user);
-        } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
 
     @PutMapping()
     @Operation(summary = "사용자 정보 변경", description = "엑세스 토큰을 통해 유저 정보를 확인 후 정보를 변경합니다. 중요) 이메일 변경으로 인해 dto 의 엑세스 토큰과 리프레쉬 토큰을 헤더에 다시 고정시켜줘야함")
     public ResponseEntity<UserUpdateResponseDto> updateUser(UserUpdateRequestDto requestDto) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-
         try {
             UserUpdateResponseDto responseDto = userService.updateUser(email, requestDto);
             return ResponseEntity.ok(responseDto);

@@ -48,7 +48,9 @@ public class Business extends BaseTimeEntity {
     private String representativeName; // 대표자 성명
 
     @Column(name = "COMPANY_EMAIL")
-    private String companyEmail;
+    private String companyEmail; // 공개 이메일
+
+
 
     @Column(name = "COMPANY_REGISTER_NAME", nullable = false, unique = true)
     private String companyRegisterName; // 사용자 등록번호
@@ -92,14 +94,14 @@ public class Business extends BaseTimeEntity {
     private Locate locate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_EMAIL")
-    private User user;
+    @JoinColumn(name = "USER_EMAIL", referencedColumnName = "EMAIL")
+    private User owner;
 
     @OneToMany(mappedBy = "business", fetch = FetchType.LAZY)
     private List<Reservation> reservations = new ArrayList<>();
 
     @Builder
-    public Business(String companyName, String representativeName, String companyEmail, String companyRegisterName, Address address, String companyTel, String lineIntroduce, String locationInfo, String introduce, String keyword, LocalTime serviceStartHour, LocalTime serviceEndHour, Set<DayOfWeek> serviceDaysOfWeek, Locate locate, User user) {
+    public Business(String companyName, String representativeName, String companyEmail, String companyRegisterName, Address address, String companyTel, String lineIntroduce, String locationInfo, String introduce, String keyword, LocalTime serviceStartHour, LocalTime serviceEndHour, Set<DayOfWeek> serviceDaysOfWeek, Locate locate, User owner) {
         this.companyName = companyName;
         this.representativeName = representativeName;
         this.companyEmail = companyEmail;
@@ -114,7 +116,8 @@ public class Business extends BaseTimeEntity {
         this.serviceEndHour = serviceEndHour;
         this.serviceDaysOfWeek = serviceDaysOfWeek;
         this.locate = locate;
-        this.user = user;
+        this.owner = owner;
+
     }
 
     public static Business toEntity(BusinessUserCreateDto createDto, User user){
@@ -133,7 +136,7 @@ public class Business extends BaseTimeEntity {
                 .serviceEndHour(createDto.getServiceEndHour())
                 .serviceDaysOfWeek(createDto.getServiceDaysOfWeek())
                 .locate(Locate.toEntity(createDto.getLocate()))
-                .user(user)
+                .owner(user)
                 .build();
     }
 

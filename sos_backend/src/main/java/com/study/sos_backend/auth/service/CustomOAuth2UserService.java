@@ -55,7 +55,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         // socialType에 따라 유저 정보를 통해 OAuthAttributes 객체 생성
         OAuthAttributes extractAttributes = OAuthAttributes.of(providerType, userNameAttributeName, attributes);
 
-        User createdUser = getUser(extractAttributes, providerType); // getUser() 메소드로 User 객체 생성 후 반환
+        User createdUser = getUser(extractAttributes, providerType); // getOwner() 메소드로 User 객체 생성 후 반환
 
         // DefaultOAuth2User 를 구현한 CustomOAuth2User 객체를 생성해서 반환
         return new CustomOAuth2User(
