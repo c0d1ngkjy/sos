@@ -39,6 +39,7 @@ public class BusinessInfoResponseDto {
     LocalTime serviceEndHour;
     Set<DayOfWeek> serviceDaysOfWeek;
     LocateDto locate;
+    Double distance;
 
 
     public BusinessInfoResponseDto(Business business) {
@@ -59,6 +60,26 @@ public class BusinessInfoResponseDto {
         this.serviceDaysOfWeek = business.getServiceDaysOfWeek();
         this.locate = new LocateDto(business.getLocate());
         this.address = new AddressDto(business.getAddress());
+    }
 
+    public BusinessInfoResponseDto(Business business, Double distance) {
+        this.id = business.getId();
+        this.createdDate = business.getCreatedDate();
+        this.modifiedDate = business.getModifiedDate();
+        this.companyName = business.getCompanyName();
+        this.representativeName = business.getRepresentativeName();
+        this.companyEmail = business.getCompanyEmail();
+        this.companyRegisterName = business.getCompanyRegisterName();
+        this.companyTel = business.getCompanyTel();
+        this.lineIntroduce = business.getLineIntroduce();
+        this.locationInfo = business.getLocationInfo();
+        this.introduce = business.getIntroduce();
+        this.keyword = business.getKeyword();
+        this.serviceStartHour = business.getServiceStartHour();
+        this.serviceEndHour = business.getServiceEndHour();
+        this.serviceDaysOfWeek = business.getServiceDaysOfWeek();
+        this.locate = new LocateDto(business.getLocate());
+        this.address = new AddressDto(business.getAddress());
+        this.distance = distance;
     }
 }

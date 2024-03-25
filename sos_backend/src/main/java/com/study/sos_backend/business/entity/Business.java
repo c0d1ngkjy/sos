@@ -6,6 +6,7 @@ import com.study.sos_backend.business.dto.BusinessUserCreateDto;
 import com.study.sos_backend.common.entity.Address;
 import com.study.sos_backend.common.entity.BaseTimeEntity;
 import com.study.sos_backend.common.entity.Locate;
+import com.study.sos_backend.membership.entity.Membership;
 import com.study.sos_backend.reservation.entity.Reservation;
 import com.study.sos_backend.user.entity.User;
 import jakarta.persistence.*;
@@ -20,25 +21,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 미용실 정보에 대한 엔티티
+ */
+
 @Getter
 @Entity
 @Table(name = "BUSINESS_INFO")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Business extends BaseTimeEntity {
 
-    /**
-     * 미용실 정보에 대한 엔티티
-     */
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "ID", nullable = false)
     private Long id;
-
-    /**
-     * 이 사이에 미용실 정보 작성해두셍
-     */
 
 
     @Column(name = "COMP_NM", nullable = false)
@@ -49,7 +46,6 @@ public class Business extends BaseTimeEntity {
 
     @Column(name = "COMPANY_EMAIL")
     private String companyEmail; // 공개 이메일
-
 
 
     @Column(name = "COMPANY_REGISTER_NAME", nullable = false, unique = true)
@@ -89,9 +85,14 @@ public class Business extends BaseTimeEntity {
     private Set<DayOfWeek> serviceDaysOfWeek;
 
     // 위치 정보에 관한 엔티티
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "LOCATE_ID")
     private Locate locate;
+
+    // 멤버십에 관한 엔티티
+
+    @OneToOne(mappedBy = "business",orphanRemoval = true, cascade = CascadeType.ALL)
+    private Membership membership;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_EMAIL", referencedColumnName = "EMAIL")
@@ -99,6 +100,8 @@ public class Business extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "business", fetch = FetchType.LAZY)
     private List<Reservation> reservations = new ArrayList<>();
+
+
 
     @Builder
     public Business(String companyName, String representativeName, String companyEmail, String companyRegisterName, Address address, String companyTel, String lineIntroduce, String locationInfo, String introduce, String keyword, LocalTime serviceStartHour, LocalTime serviceEndHour, Set<DayOfWeek> serviceDaysOfWeek, Locate locate, User owner) {
@@ -117,10 +120,10 @@ public class Business extends BaseTimeEntity {
         this.serviceDaysOfWeek = serviceDaysOfWeek;
         this.locate = locate;
         this.owner = owner;
-
+        this.membership = new Membership(this);
     }
 
-    public static Business toEntity(BusinessUserCreateDto createDto, User user){
+    public static Business toEntity(BusinessUserCreateDto createDto, User user) {
         return Business.builder()
                 .companyName(createDto.getCompanyName())
                 .representativeName(createDto.getRepresentativeName())
@@ -140,7 +143,7 @@ public class Business extends BaseTimeEntity {
                 .build();
     }
 
-    public void update(BusinessInfoUpdateRequestDto updateRequestDto){
+    public void update(BusinessInfoUpdateRequestDto updateRequestDto) {
         this.companyName = updateRequestDto.getCompanyName();
         this.representativeName = updateRequestDto.getRepresentativeName();
         this.companyEmail = updateRequestDto.getCompanyEmail();
@@ -153,8 +156,12 @@ public class Business extends BaseTimeEntity {
         this.keyword = updateRequestDto.getKeyword();
         this.serviceStartHour = updateRequestDto.getServiceStartHour();
         this.serviceEndHour = updateRequestDto.getServiceEndHour();
-        this.serviceDaysOfWeek =  updateRequestDto.getServiceDaysOfWeek();
+        this.serviceDaysOfWeek = updateRequestDto.getServiceDaysOfWeek();
         this.locate = Locate.toEntity(updateRequestDto.getLocate());
+    }
+
+    public void upgrade(int months){
+        this.getMembership().changeProBusiness(months);
     }
 
 }
