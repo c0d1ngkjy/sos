@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Employee {
+public class Designer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,6 +2,8 @@ package com.study.sos_backend.business.repository.impl;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.NumberTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.sos_backend.business.dto.BusinessInfoResponseDto;
 import com.study.sos_backend.business.entity.QBusiness;
@@ -44,20 +46,23 @@ public class BusinessRepositoryCustomImpl implements BusinessRepositoryCustom {
     public List<BusinessInfoResponseDto> findNearByBusinesses(double latitude, double longitude) {
         QBusiness business = QBusiness.business;
 
+        // 거리순으로 동작됨
+
+        NumberTemplate<Double> distanceExpression = Expressions.numberTemplate(Double.class,
+                "ST_DISTANCE_SPHERE(point({0}, {1}), point({2}, {3}))",
+                business.locate.latitude,
+                business.locate.longitude,
+                latitude,
+                longitude);
+
         return queryFactory
                 .select(Projections
-                        .constructor(BusinessInfoResponseDto.class, business, Expressions
-                                .numberTemplate(Double.class, "ST_DISTANCE_SPHERE(point(?, ?), point(?, ?))",
-                                        Expressions.constant(business.locate.latitude),
-                                        Expressions.constant(business.locate.longitude),
-                                        Expressions.constant(latitude),
-                                        Expressions.constant(longitude))))
+                        .constructor(BusinessInfoResponseDto.class, business, distanceExpression))
                 .from(business)
-                .where(Expressions.numberTemplate(Double.class, "ST_DISTANCE_SPHERE(point(?, ?), point(?, ?))",
-                        Expressions.constant(business.locate.latitude),
-                        Expressions.constant(business.locate.longitude),
-                        Expressions.constant(latitude),
-                        Expressions.constant(longitude)).loe(MAX_DISTANCE))
+                .where(distanceExpression.loe(MAX_DISTANCE))
+                .orderBy(distanceExpression.asc())
+                // 20개 제한
+                .limit(20)
                 .fetch();
     }
 }

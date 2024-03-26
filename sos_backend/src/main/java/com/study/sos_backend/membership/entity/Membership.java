@@ -44,4 +44,8 @@ public class Membership extends BaseTimeEntity {
         this.startDateTime = LocalDateTime.now();
         this.endDateTime = startDateTime.plusMonths(months);
     }
+
+    public void changeFreeType(){
+        this.type = MembershipType.FREE;
+    }
 }

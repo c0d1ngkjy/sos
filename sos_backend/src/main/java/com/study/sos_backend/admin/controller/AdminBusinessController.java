@@ -27,7 +27,6 @@ public class AdminBusinessController {
     private final UserService userService;
 
 
-    // TODO 모든 비즈니스 정보를 반환하는 메소드 제작하기 (페이징 처리)
     @Operation(summary = "모든 비즈니스 정보 확인", description = "페이징을 이용해 모든 비즈니스 정보를 확인합니다.")
     @GetMapping
     public ResponseEntity<Page<BusinessInfoResponseDto>> getBusinessInfos(Pageable pageable){
@@ -39,7 +38,6 @@ public class AdminBusinessController {
         }
     }
 
-    // TODO 비즈니스 회원 정보 확인
     @Operation(summary = "비즈니스 소유자 확인", description = "해당 비즈니스의 소유자를 확인합니다.")
     @GetMapping("{id}/owner")
     public ResponseEntity<UserInfoResponseDto> businessOwner(@PathVariable Long id){

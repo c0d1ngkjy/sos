@@ -23,7 +23,6 @@ public class AdminUserController {
 
     private final UserService userService;
 
-    // TODO 모든 유저 정보 확인
     @GetMapping
     public ResponseEntity<Page<UserInfoResponseDto>> getUsers(Pageable pageable){
         try{
