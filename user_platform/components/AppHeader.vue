@@ -1,6 +1,6 @@
 <template>
     <div :style="scrolled ? 'background-color:#1d1d1d; color:white' : 'background-color:white'"
-        class="sticky top-0 z-10 bg-white flex flex-row justify-between items-center md:px-6 md:py-3 px-2 py-3">
+        class="sticky top-0 z-10 bg-white flex flex-row justify-between items-center md:px-6 md:py-5 px-2 py-3">
         <div class="flex flex-row gap-8 items-center">
             <nuxt-link to="/" class="flex flex-row gap-1 items-center">
                 <UIcon class="text-xl rotate-45" name="i-heroicons-scissors" />
@@ -62,7 +62,7 @@
 const loginDialog = ref(false);
 const tabs = [
     { label: '홈', to: '/' },
-    { label: '내 주변', to: '/' },
+    { label: '내 주변', to: '/around' },
     { label: '예약', to: '/' },
     { label: '마이 페이지', to: '/' },
     { label: '샵', to: '/' },
@@ -81,18 +81,7 @@ async function onSubmit(event) {
 }
 
 async function handleKakaoLogin() {
-    // Kakao.init(runtimeConfig.public.kakaoJsApiKey);
-    // console.log(Kakao.isInitialized());
-
-    // Kakao.Auth.authorize({
-    //     redirectUri: `${window.location.origin}/kakao-callback`,
-    //     prompt: 'login',
-    // });
-    //$router.replace("http://43.201.246.72:8080/oauth2/authorization/kakao")
     window.location.href = 'http://43.201.246.72:8080/oauth2/authorization/kakao';
-
-    //const loginResponse = await useFetch('http://43.201.246.72:8080/oauth2/authorization/kakao')
-    //console.log(loginResponse)
 }
 
 const scrolled = ref(false);

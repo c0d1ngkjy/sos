@@ -10,15 +10,6 @@
             </div>
         </div>
 
-        <div class="mt-3 text-center">
-            <GeoLocation />
-        </div>
-
-        <div class="my-3 px-6 py-4 bg-white rounded-lg flex justify-between items-center">
-            <div class="text-xs md:text-lg">다른 지역의 미용실을 찾고 계신가요?</div>
-            <UButton color="black">위치 변경하기</UButton>
-        </div>
-
         <div class=" py-4 mb-3">
             <div class="font-semibold text-xl px-6">베스트 리뷰 미용실</div>
             <UCarousel v-slot="{ item }" :items="items" class="overflow-hidden">
