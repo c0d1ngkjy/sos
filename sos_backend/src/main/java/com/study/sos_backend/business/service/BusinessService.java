@@ -3,16 +3,14 @@ package com.study.sos_backend.business.service;
 import com.study.sos_backend.business.dto.BusinessInfoResponseDto;
 import com.study.sos_backend.business.dto.BusinessInfoUpdateRequestDto;
 import com.study.sos_backend.business.entity.Business;
+import com.study.sos_backend.business.enums.BusinessSortType;
 import com.study.sos_backend.business.repository.BusinessRepository;
-import com.study.sos_backend.user.dto.UserInfoResponseDto;
-import com.study.sos_backend.user.entity.User;
 import com.study.sos_backend.user.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +21,6 @@ import java.util.List;
 public class BusinessService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final BusinessRepository businessRepository;
 
     public BusinessInfoResponseDto getBusinessInfo(Long id) {
@@ -31,8 +28,18 @@ public class BusinessService {
         return new BusinessInfoResponseDto(business);
     }
 
-    public Page<BusinessInfoResponseDto> getBusinessInfos(Pageable pageable){
+    public Page<BusinessInfoResponseDto> getBusinessInfos(Pageable pageable) {
         return businessRepository.getAllBusiness(pageable);
+    }
+
+    public List<BusinessInfoResponseDto> getNearbyBusinessInfos(double latitude, double longitude, BusinessSortType sortType){
+
+        List<BusinessInfoResponseDto> responseDtos = businessRepository.findNearByBusinesses(latitude, longitude);
+        if (responseDtos.isEmpty()){
+            throw new EmptyResultDataAccessException(0);
+        }
+
+        return responseDtos;
     }
 
     public List<BusinessInfoResponseDto> getAllByUser(String email) {
@@ -62,8 +69,6 @@ public class BusinessService {
     public void deleteBusiness(Business business) {
         businessRepository.delete(business);
     }
-
-    // 비즈니스 소유자 확인
 
 
     // ID 파라미터 비즈니스 삭제

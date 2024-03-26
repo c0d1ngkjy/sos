@@ -65,7 +65,6 @@ public class UserService {
                 .build();
 
         Business business = Business.toEntity(createDto, user);
-
         userRepository.save(user);
         businessRepository.save(business);
 

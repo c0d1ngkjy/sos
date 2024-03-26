@@ -4,6 +4,7 @@ import com.study.sos_backend.business.dto.BusinessInfoResponseDto;
 import com.study.sos_backend.business.dto.BusinessInfoUpdateRequestDto;
 import com.study.sos_backend.business.dto.BusinessUserCreateDto;
 import com.study.sos_backend.business.dto.BusinessUserInfoResponseDto;
+import com.study.sos_backend.business.enums.BusinessSortType;
 import com.study.sos_backend.business.service.BusinessService;
 import com.study.sos_backend.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@Tag(name = "비즈니스", description = "비즈니스 관련 API")
 @RestController
 @RequestMapping("/api/v1/business")
 @RequiredArgsConstructor
@@ -45,6 +49,30 @@ public class BusinessController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/find")
+    @Operation(summary = "내 주변 비즈니스 확인", description = "위도 경도 파라미터로 주변 5KM 반경 내에 비즈니스 반환. 이때, sort 를 통해 거리순, 가격 순 반환")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "비즈니스 정보 반환", content = @Content(schema = @Schema(implementation = BusinessUserCreateDto.class))),
+            @ApiResponse(responseCode = "400", description = "매개 변수가 잘못되거나 서버 오류"),
+            @ApiResponse(responseCode = "404", description = "주변에 가까운 비즈니스 정보가 존재하지 않음")
+    })
+    public ResponseEntity<List<BusinessInfoResponseDto>> getNearbyBusinessInfos(@RequestParam(required = true) Double latitude, @RequestParam(required = true) Double longitude, @RequestParam(required = false) BusinessSortType sortType) {
+
+        try{
+            if (sortType == null || sortType == BusinessSortType.DISTANCE)
+                sortType = BusinessSortType.DISTANCE;
+            else{
+                sortType = BusinessSortType.PRICE;
+            }
+            List<BusinessInfoResponseDto> businessInfos = businessService.getNearbyBusinessInfos(latitude, longitude, sortType);
+        }catch (EmptyResultDataAccessException e){
+            return ResponseEntity.notFound().build();
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+        return null;
     }
 
     @PreAuthorize("hasRole('ROLE_BUSINESS')")
@@ -96,7 +124,7 @@ public class BusinessController {
     public ResponseEntity<BusinessUserInfoResponseDto> createBusiness(@RequestBody BusinessUserCreateDto createDto) {
         try {
             userService.createBusinessUser(createDto);
-            return ResponseEntity.ok(new BusinessUserInfoResponseDto(createDto));
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
