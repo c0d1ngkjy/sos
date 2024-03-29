@@ -24,8 +24,7 @@ public class BusinessService {
     private final BusinessRepository businessRepository;
 
     public BusinessInfoResponseDto getBusinessInfo(Long id) {
-        Business business = businessRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        return new BusinessInfoResponseDto(business);
+        return businessRepository.getBusinessInfoById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public Page<BusinessInfoResponseDto> getBusinessInfos(Pageable pageable) {
@@ -76,6 +75,8 @@ public class BusinessService {
     public void deleteByBusinessId(Long id) throws EmptyResultDataAccessException {
         businessRepository.deleteById(id);
     }
+
+
 
 
 }

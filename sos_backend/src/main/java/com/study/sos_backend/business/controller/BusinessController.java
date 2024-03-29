@@ -67,12 +67,12 @@ public class BusinessController {
                 sortType = BusinessSortType.PRICE;
             }
             List<BusinessInfoResponseDto> businessInfos = businessService.getNearbyBusinessInfos(latitude, longitude, sortType);
+            return ResponseEntity.ok(businessInfos);
         }catch (EmptyResultDataAccessException e){
             return ResponseEntity.notFound().build();
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
-        return null;
     }
 
     @PreAuthorize("hasRole('ROLE_BUSINESS')")
