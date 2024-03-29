@@ -3,6 +3,7 @@ package com.study.sos_backend.business.entity;
 
 import com.study.sos_backend.business.dto.BusinessInfoUpdateRequestDto;
 import com.study.sos_backend.business.dto.BusinessUserCreateDto;
+import com.study.sos_backend.business.entity.hair.HairDesigner;
 import com.study.sos_backend.common.entity.Address;
 import com.study.sos_backend.common.entity.BaseTimeEntity;
 import com.study.sos_backend.common.entity.Locate;
@@ -94,14 +95,17 @@ public class Business extends BaseTimeEntity {
     @OneToOne(mappedBy = "business",orphanRemoval = true, cascade = CascadeType.ALL)
     private Membership membership;
 
+
+    // 해당 비즈니스의 관리자 정보
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_EMAIL", referencedColumnName = "EMAIL")
     private User owner;
 
-    @OneToMany(mappedBy = "business", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "business")
     private List<Reservation> reservations = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "business",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HairDesigner> hairDesigners = new ArrayList<>();
 
     @Builder
     public Business(String companyName, String representativeName, String companyEmail, String companyRegisterName, Address address, String companyTel, String lineIntroduce, String locationInfo, String introduce, String keyword, LocalTime serviceStartHour, LocalTime serviceEndHour, Set<DayOfWeek> serviceDaysOfWeek, Locate locate, User owner) {
@@ -163,5 +167,6 @@ public class Business extends BaseTimeEntity {
     public void upgrade(int months){
         this.getMembership().changeProBusiness(months);
     }
+
 
 }
